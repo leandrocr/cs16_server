@@ -10,5 +10,5 @@ cstrike:
     - "27015:27015/udp"
     - "27015:27015"
   volumes:
-    - ./cstrike/liblist.gam:/steam/cs16/cstrike/liblist.gam
-    - ./cstrike/addons:/steam/cs16/cstrike/addons
+    - ./cstrike/liblist.gam:/home/csserver/serverfiles/cstrike/liblist.gam
+    - ./cstrike/addons:/home/csserver/serverfiles/cstrike/addons
