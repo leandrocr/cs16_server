@@ -16,6 +16,7 @@ EXPOSE 1200/udp
  
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get -qqy install gdb mailutils postfix tmux ca-certificates lib32gcc1 wget
+RUN apt-get install -y curl bsdmainutils bzip2 unzip libstdc++6:i386
  
 # script refuses to run in root, create user
 RUN useradd -m csserver
@@ -24,18 +25,15 @@ USER csserver
 WORKDIR /home/csserver
  
 # download Counter-Strike 1.6 Linux Server Manager script
-RUN wget http://danielgibbs.co.uk/dl/csserver
+RUN wget https://raw.githubusercontent.com/GameServerManagers/LinuxGSM/master/CounterStrike/csserver
 RUN chmod +x csserver
  
-# Install the server (interactive script requires piping of input)
-# Likes to fail so I run it twice
-RUN printf "y\ny\nn\ny\ny\ny\ny\nn\n${SERVERNAME}\n${RCONPASS}\n" | ./csserver install
-RUN printf "y\ny\nn\ny\ny\ny\ny\nn\n${SERVERNAME}\n${RCONPASS}\n" | ./csserver install
+# Install the server
+RUN ./csserver auto-install
  
 # To edit the server.cfg or insert maps
 # we will need to some work with files
 # this is where it will go
- 
  
 # Start the server
 WORKDIR /home/csserver/serverfiles
