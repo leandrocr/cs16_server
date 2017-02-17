@@ -1,14 +1,27 @@
-cstrike:
-  build: ./
-  environment:
-    - SERVER_NAME="My cool server"
-    - RCON_PW=""
-    - START_MAP="de_dust2"
-  ports:
-    - "26900:26900/udp"
-    - "27020:27020/udp"
-    - "27015:27015/udp"
-    - "27015:27015"
-  volumes:
-    - ./cstrike/liblist.gam:/home/csserver/serverfiles/cstrike/liblist.gam
-    - ./cstrike/addons:/home/csserver/serverfiles/cstrike/addons
+version: '2'
+
+services:
+  cstrike:
+    build: v2/
+    environment:
+      - SERVER_NAME="ICONIC"
+      - RCON_PW=""
+      - START_MAP="de_dust2"
+    ports:
+      - "26900:26900/udp"
+      - "27020:27020/udp"
+      - "27015:27015/udp"
+      - "27015:27015"
+      - "8080:80"
+      - "0:3306"
+    volumes:
+      - ./cstrike/liblist.gam:/home/csserver/serverfiles/cstrike/liblist.gam
+      - ./cstrike/addons:/home/csserver/serverfiles/cstrike/addons
+      - ../hlstatsx-community-edition/web:/var/www/html
+      - mysql_data:/var/lib/mysql
+      - ../hlstatsx-community-edition:/tmp/hlstatx
+      - ./cstrike/server.cfg:/home/csserver/serverfiles/cstrike/server.cfg
+
+volumes:
+  mysql_data:
+    driver: local
